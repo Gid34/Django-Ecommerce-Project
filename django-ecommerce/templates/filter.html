@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+
+  <!-- <main role="main" class="container"> -->
+
+   <!-- Places all elements within a container> -->
+  <div class="container">
+    <h1>Filter Page</h1>
+    <h3>Find Item</h3> 
+
+    <form method="GET" action=".">
+
+      <!-- Filter # 1 -->
+      <div class="form-row">
+          <div class="form-group col-12">
+              <div class="input-group">
+                  <input class="form-control py-2 border-right-0 border" type="search" name="universal_search" placeholder="Search for item" />
+                  <span class="input-group-append">
+                      <div class="input-group-text bg-transparent">
+                          <i class="fa fa-search"></i>
+                      </div>
+                  </span>
+              </div>
+          </div>        
+      </div>
+
+      <!-- Checkbox filter -->
+
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="reviewed" name="reviewed">
+          <label class="form-check-label" for="reviewed">
+            Reviewed
+          </label>
+        </div>
+      </div>
+
+      <!-- Checkbox filter -->
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="notReviewed" name="notReviewed">
+          <label class="form-check-label" for="notReviewed">
+            Not reviewed
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+  
+    <!-- Return Results -->
+      <h3>Results</h3>
+      <ul>
+        {% for item in queryset %}
+          <li>
+            {{ item.title }}
+            <span>Price: {{ item.price }} |</span>
+            <span>Discounted Price: {{ item.price }} |</span>
+            <span>Category: {{ item.category }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+  </div>
+
+  <!-- </main> -->
+
+  <div class="container">
+
+    <!--Grey Blue Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+      <!-- Filtering Navbar -->
+      <!-- Navbar brand -->
+      <span class="navbar-brand">Categories:</span>
+
+      <!-- Collapse button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+        aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="basicExampleNav">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">All <!-- Change what's in # to the URL-->
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Shirts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sport wears</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Outwears</a>
+          </li>
+
+        </ul>
+        <!-- Links -->
+
+        <form class="form-inline">
+          <div class="md-form my-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          </div>
+        </form>
+      </div>
+      <!-- Grey Blue Navbar -->
+
+
+{% endblock content %}

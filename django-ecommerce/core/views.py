@@ -351,6 +351,17 @@ class HomeView(ListView):
     paginate_by = 10 #This is what's being called for the "next pages"
     template_name = "home.html"
 
+# class HomeView(ListView)):
+#     def get(self, *args, **kwargs):
+#         try:
+#             items = Item.objects.all()
+#             context = {
+#                 'items': items
+#             }
+#             return render(self.request, 'home.html', context)
+#         except ObjectDoesNotExist:
+#             messages.warning(self.request, "There is no item in the database.")
+#             return redirect("/")
 
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
@@ -518,3 +529,27 @@ class RequestRefundView(View):
             except ObjectDoesNotExist:
                 messages.info(self.request, "This order does not exist.")
                 return redirect("core:request-refund")
+
+#Code for SearchBar
+
+#This will be called by the filter parameter
+def is_valid_queryparam(param):
+    return param != '' and param is not None
+
+
+def filter(request):
+    qs = Item.objects.all()
+    search_bar = request.GET.get('universal_search')
+    if search_bar != '' and search_bar is not None:
+        qs = qs.filter(title=search_bar)
+    
+    context = {
+        'queryset':qs
+    }
+    return render(request, "home.html", context)
+
+  
+
+
+
+

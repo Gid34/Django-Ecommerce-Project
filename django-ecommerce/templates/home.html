@@ -2,9 +2,109 @@
 
 {% block content %}
 <main>
+
+  <div class="container">
+    <h1>Home Page</h1>
+    <h3>Find Item</h3> 
+       <!-- Changing , to filter seemed to fixed it '''-->
+    <form method="GET" action="filter">
+
+      <!-- Filter # 1 '''-->
+      <div class="form-row">
+          <div class="form-group col-12">
+              <div class="input-group">
+                  <input class="form-control py-2 border-right-0 border" type="search" name="universal_search" placeholder="Search for item" />
+                  <span class="input-group-append">
+                      <div class="input-group-text bg-transparent">
+                          <i class="fa fa-search"></i>
+                      </div>
+                  </span>
+              </div>
+          </div>        
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Search</button>
+
+ 
+    </form>
+
+  <!-- Return Results -->
+  <!-- <h3>Results</h3>
+  <ul>
+    {% for item in queryset %}
+      <li>
+        {{ item.title }}
+        <span>Price: {{ item.price }}</span>
+        <span>Category: {{ item.category }}</span>
+      </li>
+    {% endfor %} -->
+
+    <!-- Return Results as a card. SUCCESS!!!-->
+    {% for item in queryset %}
+        <div class="col-lg-3 col-md-6 mb-4">
+
+          <div class="card">
+
+            <!--Card image-->
+            <div class="view overlay">
+
+              <!--Got no fucking idea what this is-->
+              <!-- {% comment %} <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg"
+                class="card-img-top" {% endcomment %}  -->
+
+              <img src="{{ item.image.url }}" class="card-img-top">
+
+              <a href="{{ item.get_absolute_url }}">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+
+            </div>
+
+            <!--Card content-->
+            <div class="card-body text-center">
+              <a href="" class="grey-text">
+                <h5>{{ item.get_category_display }} </h5> <!--Category Shirt, Outerwear etc.-->
+
+              </a>
+
+
+
+              <!--Price of item-->
+              <h3 class="font-weight-bold blue-text">
+                <strong>$
+                  {% if item.discount_price %}
+                  {{ item.discount_price }}
+                  {% else %}
+                  {{ item.price }}
+                  {% endif %}
+                </strong>
+
+              </h3>
+
+              <!--Name of Item-->
+              <h5>
+                <strong>
+                  <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                    <span
+                      class="badge badge-pill {{ item.get_label_display }}-color">NEW</span><!--Label: New , Low Stock-->
+                  </a>
+                </strong>
+              </h5>
+
+            </div>
+
+          </div>
+
+        </div>
+        {% endfor %}
+  </ul>
+
+    </div>
+  
   <div class="container">
 
-    <!--Navbar-->
+    <!--Grey Blue Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
 
       <!-- Filtering Navbar -->
@@ -46,10 +146,10 @@
           </div>
         </form>
       </div>
-      <!-- Collapsible content -->
+      <!-- Grey Blue Navbar -->
 
     </nav>
-    <!--/.Navbar-->
+   
 
     <!--Section: Products v.3-->
     <section class="text-center mb-4">
