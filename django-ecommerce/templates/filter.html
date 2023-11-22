@@ -10,9 +10,10 @@
     <h1>Filter Page</h1>
     <h3>Find Item</h3> 
 
+  <!--START OF FILTERS-->
     <form method="GET" action=".">
 
-      <!-- Filter # 1 -->
+      <!-- Search Bar -->
       <div class="form-row">
           <div class="form-group col-12">
               <div class="input-group">
@@ -26,26 +27,48 @@
           </div>        
       </div>
 
-      <!-- Checkbox filter -->
 
-      <div class="form-group">
+      <!-- Checkbox Shirt -->
+      <div class="form-group col-md-4">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="reviewed" name="reviewed">
-          <label class="form-check-label" for="reviewed">
-            Reviewed
+          <input class="form-check-input" type="checkbox" id="shirt" name="shirt">
+          <label class="form-check-label" for="shirt">
+            Shirt
           </label>
         </div>
       </div>
 
-      <!-- Checkbox filter -->
-      <div class="form-group">
+      <!-- Checkbox All.Code works -->
+      <div class="form-group col-md-4">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="notReviewed" name="notReviewed">
-          <label class="form-check-label" for="notReviewed">
-            Not reviewed
+          <input class="form-check-input" type="checkbox"  id="all-categories" name="all-categories">
+          <label class="form-check-label" for="all-categories">
+            All
           </label>
         </div>
       </div>
+
+  
+        <!-- Label Filter -->
+        <div class="form-group col-md-4">
+          <label for = "item_status">Item Status</label>
+    
+          <select id = "item_status" class = "form-control" name = "item_status">
+            
+    
+    
+            <!-- Default idle display -->
+            <option selected> Filter Item Status</option>
+    
+              {% for item_status in all_item_label %}
+              <option value = "{{item_status.label}}">{{item_status.label}}</option>
+              {% endfor %}
+    
+          </select>
+        </div>
+      
+        
+
 
       <!-- Submit Button -->
       <button type="submit" class="btn btn-primary">Search</button>
@@ -59,60 +82,73 @@
           <li>
             {{ item.title }}
             <span>Price: {{ item.price }} |</span>
-            <span>Discounted Price: {{ item.price }} |</span>
+            <span>Discounted Price: {{ item.discount_price }} |</span>
             <span>Category: {{ item.category }}</span>
           </li>
         {% endfor %}
       </ul>
+
+     <!-- Return Results as a card. SUCCESS!!!-->
+{% for item in queryset %}
+<div class="col-lg-3 col-md-6 mb-4">
+
+  <div class="card">
+
+    <!--Card image-->
+    <div class="view overlay">
+
+      <!--Got no fucking idea what this is-->
+      <!-- {% comment %} <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg"
+        class="card-img-top" {% endcomment %}  -->
+
+      <img src="{{ item.image.url }}" class="card-img-top">
+
+      <a href="{{ item.get_absolute_url }}">
+        <div class="mask rgba-white-slight"></div>
+      </a>
+
+    </div>
+
+    <!--Card content-->
+    <div class="card-body text-center">
+      <a href="" class="grey-text">
+        <h5>{{ item.get_category_display }} </h5> <!--Category Shirt, Outerwear etc.-->
+
+      </a>
+
+
+
+      <!--Price of item-->
+      <h3 class="font-weight-bold blue-text">
+        <strong>$
+          {% if item.discount_price %}
+          {{ item.discount_price }}
+          {% else %}
+          {{ item.price }}
+          {% endif %}
+        </strong>
+
+      </h3>
+
+      <!--Name of Item-->
+      <h5>
+        <strong>
+          <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+            <span
+              class="badge badge-pill {{ item.get_label_display }}-color">NEW</span><!--Label: New , Low Stock-->
+          </a>
+        </strong>
+      </h5>
+
+    </div>
+
   </div>
 
-  <!-- </main> -->
+</div>
+{% endfor %}
 
-  <div class="container">
+</div>
 
-    <!--Grey Blue Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
-
-      <!-- Filtering Navbar -->
-      <!-- Navbar brand -->
-      <span class="navbar-brand">Categories:</span>
-
-      <!-- Collapse button -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-        aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="basicExampleNav">
-
-        <!-- Links -->
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">All <!-- Change what's in # to the URL-->
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Shirts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Sport wears</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Outwears</a>
-          </li>
-
-        </ul>
-        <!-- Links -->
-
-        <form class="form-inline">
-          <div class="md-form my-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          </div>
-        </form>
-      </div>
-      <!-- Grey Blue Navbar -->
-
+ 
 
 {% endblock content %}

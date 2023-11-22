@@ -2,14 +2,15 @@
 
 {% block content %}
 <main>
-
+  
   <div class="container">
     <h1>Home Page</h1>
     <h3>Find Item</h3> 
        <!-- Changing , to filter seemed to fixed it '''-->
     <form method="GET" action="filter">
+    <!-- <form method="GET" action="."> -->
 
-      <!-- Filter # 1 '''-->
+      <!-- Search Bar Filter-->
       <div class="form-row">
           <div class="form-group col-12">
               <div class="input-group">
@@ -23,23 +24,50 @@
           </div>        
       </div>
 
+
+      <!-- Checkbox Shirt -->
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox"  id="shirt" name="shirt">
+          <label class="form-check-label" for="shirt">
+
+            Shirt
+          </label>
+        </div>
+      </div>
+
+      <!-- Checkbox All -->
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox"  id="all-categories" name="all-categories">
+          <label class="form-check-label" for="all-categories">
+            All
+          </label>
+        </div>
+      </div>
+
+        <!-- Label Filter -->
+        <div class="form-group col-md-4">
+          <label for = "item_status">Item Status</label>
+    
+          <select id = "item_status" class = "form-control" name = "item_status">
+            
+    
+    
+            <!-- Default idle display -->
+            <option selected> Filter Item Status</option>
+    
+              {% for item in object_list %}
+              <option value = "{{item.label}}">{{item.label}}</option>
+              {% endfor %}
+    
+          </select>
+        </div>
+      
       <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary">Search</button>
-
- 
+      <button type="submit" class="btn btn-primary">Search</button>  
     </form>
-
-  <!-- Return Results -->
-  <!-- <h3>Results</h3>
-  <ul>
-    {% for item in queryset %}
-      <li>
-        {{ item.title }}
-        <span>Price: {{ item.price }}</span>
-        <span>Category: {{ item.category }}</span>
-      </li>
-    {% endfor %} -->
-
+      
     <!-- Return Results as a card. SUCCESS!!!-->
     {% for item in queryset %}
         <div class="col-lg-3 col-md-6 mb-4">
@@ -48,11 +76,6 @@
 
             <!--Card image-->
             <div class="view overlay">
-
-              <!--Got no fucking idea what this is-->
-              <!-- {% comment %} <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg"
-                class="card-img-top" {% endcomment %}  -->
-
               <img src="{{ item.image.url }}" class="card-img-top">
 
               <a href="{{ item.get_absolute_url }}">
@@ -265,5 +288,4 @@
 
   </div>
 </main>
-
 {% endblock content %}

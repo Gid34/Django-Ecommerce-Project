@@ -15,7 +15,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
+from .models import *
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -532,21 +532,40 @@ class RequestRefundView(View):
 
 #Code for SearchBar
 
-#This will be called by the filter parameter
+#This will be called by the filter parameter.
+#This cannot be commented out since it will break the code.
 def is_valid_queryparam(param):
     return param != '' and param is not None
 
-
+#When filtered, redirect to another page
 def filter(request):
     qs = Item.objects.all()
+    all_item_label = qs
     search_bar = request.GET.get('universal_search')
+    checkbox_shirt = request.GET.get('shirt')
+    checkbox_all = request.GET.get('all-categories')
+    item_status = request.GET.get('item_status')
+
     if search_bar != '' and search_bar is not None:
-        qs = qs.filter(title=search_bar)
-    
+        qs = qs.filter(title__icontains=search_bar) 
+
+    if checkbox_shirt == 'on':
+        qs = qs.filter(category='S')
+
+    if checkbox_all == 'on':
+        qs = Item.objects.all()
+
+    if item_status != 'Filter Item Status':
+        qs = qs.filter(label=item_status)
+
     context = {
-        'queryset':qs
+        'queryset':qs,
+        'all_item_label':all_item_label
     }
-    return render(request, "home.html", context)
+
+    return render(request, "filter.html", context)
+
+
 
   
 
