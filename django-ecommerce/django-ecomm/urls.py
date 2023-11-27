@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls.static import static
+from django.conf.urls.static import static #This is needed for the debugging
 from django.contrib import admin
 from django.urls import path, include
 
@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('core.urls', namespace='core'))
 ]
 
+#This allows the image to display
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]

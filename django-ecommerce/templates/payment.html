@@ -111,7 +111,7 @@ button:hover {
         <div class="col-md-12 mb-4">
           <div class="card">
 
-            {% if card %}
+            <!-- {% if card %}
               <div style="padding: 5px 30px;">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" name="use_default_card" id="use_default_card">
@@ -131,7 +131,7 @@ button:hover {
                   </div>
                   <div id="card-errors" role="alert"></div>
               </form>
-            </div>
+            </div> -->
 
             <div class="new-card-form">
               <form action="." method="post" class="stripe-form" id="stripe-form">
@@ -230,7 +230,9 @@ button:hover {
   // Submit the form with the token ID.
   function stripeTokenHandler(token) {
     // Insert the token ID into the form so it gets submitted to the server
-    var form = document.getElementById('stripe-form');
+    var form = document.getElementById('stripe-form'); 
+    //changed the name from 'payment-form' -> 'stripe-form' which is the name of the
+    //form in line 125-139
     var hiddenInput = document.createElement('input');
     hiddenInput.setAttribute('type', 'hidden');
     hiddenInput.setAttribute('name', 'stripeToken');

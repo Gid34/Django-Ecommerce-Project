@@ -558,6 +558,8 @@ def filter(request):
     if item_status != 'Filter Item Status':
         qs = qs.filter(label=item_status)
 
+    #^Turn these into elif, else condition is  qs = Item.objects.all()
+
     context = {
         'queryset':qs,
         'all_item_label':all_item_label

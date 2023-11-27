@@ -54,12 +54,12 @@
             
     
     
-            <!-- Default idle display -->
-            <option selected> Filter Item Status</option>
-    
-              {% for item in object_list %}
-              <option value = "{{item.label}}">{{item.label}}</option>
-              {% endfor %}
+          <!-- Default idle display -->
+          <option selected> Filter Item Status</option>
+  
+            {% for item in object_list %}
+            <option value = "{{item.label}}">{{item.label}}</option>
+            {% endfor %}
     
           </select>
         </div>
@@ -69,16 +69,17 @@
     </form>
       
     <!-- Return Results as a card. SUCCESS!!!-->
-    {% for item in queryset %}
+    {% for item in object_list %}
         <div class="col-lg-3 col-md-6 mb-4">
 
           <div class="card">
+          
+          <!--Each Item = Card-->
 
             <!--Card image-->
             <div class="view overlay">
-              <img src="{{ item.image.url }}" class="card-img-top">
-
-              <a href="{{ item.get_absolute_url }}">
+              <img src="{{ item.image.url }}" class="card-img-top">  <!-- This loads the image -->
+              <a href="{{ item.get_absolute_url }}" class="dark-grey-text"> <!--This redirects it to product.html slug-->
                 <div class="mask rgba-white-slight"></div>
               </a>
 
