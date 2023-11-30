@@ -1,11 +1,18 @@
+
+
+<!-- Container of Breakdown-->
+
+<!-- This breakdown is re-sized smaller in payment.html and is bigger in payment/stripe-->
 <div class="col-md-12 mb-4">
     <h4 class="d-flex justify-content-between align-items-center mb-3">
     <span class="text-muted">Your cart</span>
+
+    <!-- Count Items Button/Badge-->
     <span class="badge badge-secondary badge-pill">{{ order.items.count }}</span>
     </h4>
     <ul class="list-group mb-3 z-depth-1">
-
-   <!-- Final Breakdown and Total Cost of Orders-->
+    
+    <!-- Final Breakdown and Total Cost of Orders-->
     {% for order_item in order.items.all %}
     <li class="list-group-item d-flex justify-content-between lh-condensed">
         <div>
@@ -24,6 +31,8 @@
         <span class="text-muted">${{ order_item.get_final_price }}</span>
     </li>
     {% endfor %}
+
+    <!-- Displays Coupon Amount-->
     {% if order.coupon %}
     <li class="list-group-item d-flex justify-content-between bg-light">
         <div class="text-success">
@@ -33,12 +42,14 @@
         <span class="text-success">-${{ order.coupon.amount }}</span>
     </li>
     {% endif %}
+    
     <li class="list-group-item d-flex justify-content-between">
         <span>Total (USD)</span>
         <strong>${{ order.get_total }}</strong>
     </li>
     </ul>
 
+     <!-- POST Request to redeem coupon-->
     {% if DISPLAY_COUPON_FORM %}
     <form class="card p-2" action="{% url 'core:add-coupon' %}" method="POST">
         {% csrf_token %}

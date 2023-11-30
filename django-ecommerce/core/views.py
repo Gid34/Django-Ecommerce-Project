@@ -392,10 +392,16 @@ def add_to_cart(request, slug):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
+      
         # check if the order item is in the order
         if order.items.filter(item__slug=item.slug).exists():
             order_item.quantity += 1
             order_item.save()
+
+            #Test prints to show how to access items = models.ManyToManyField(OrderItem) within Order Model
+            # print(order.items.filter()) #After adding the item, returns All items in the cart as a query set
+            # print(order.items.filter(item__title=item.title)) #After adding the item, returns the final quantity of the order_item added
+            
             messages.info(request, "This item quantity was updated.")
             return redirect("core:order-summary")
         else:
